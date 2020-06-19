@@ -58,11 +58,23 @@ arr_valores_i = [1.2 , 1.0, 0.8]
 arr_valores_e = [0.02, 0.03, 0.02, 0.03, 0.05, 0.05, 0.05, 0.03, 0.03, 0.02, 0.02]
 arr_valores_r = [1.0, 2.0, 5.0, 3.0, 5.0, 5.0, 3.0, 4.0, 3.0, 3.0, 3.0, 5.0, 3.0, 5.0, 5.0, 3.0]
 arr_valores_a = [0.2, 0.3, 0.4]
+
 matriz_valores_cmax = [[0.79, 0.68, 0.55], [0.6, 0.49, 0.42], [0.4, 0.34, 0.28], [0.32, 0.27, 0.22], [0.26, 0.23, 0.18]]
 matriz_valores_cmax_y = [1.0,2.0,3.0,4.0,5.0]
 matriz_valores_cmax_x = [0.02, 0.03, 0.05]
 n_archivo = 0
 directorio = ""
+
+def obtener_valor_aplificador(entradas):
+    zona = entradas[6]
+    valor_amplicador = 0
+    if zona == "I":
+        valor_amplicador = 0.5
+    elif zona == "II":
+        valor_amplicador = 0.75
+    else:
+        valor_amplicador = 1
+    return valor_amplicador
 
 def funcion_calculo_principal(entradas, arr_valores_t):
     valor_t_guion = obtener_valor_numerico(entradas[2],arr_valores_t_guion,arr_tipo)
@@ -72,6 +84,7 @@ def funcion_calculo_principal(entradas, arr_valores_t):
     valor_r = obtener_valor_numerico(entradas[5],arr_valores_r,arr_sistema)
     valor_a = obtener_valor_numerico(entradas[6],arr_valores_a,arr_zona)
     valor_cmax = obtener_valor_cmax(valor_r,valor_e)
+    valor_amplicador = obtener_valor_aplificador(entradas)
     arr_resultado_s = []
     for valor_t in arr_valores_t:
         s_aux_a = (2.75*valor_a*valor_i)/valor_r
@@ -80,7 +93,7 @@ def funcion_calculo_principal(entradas, arr_valores_t):
         s_resultado = s_aux_a*s_aux_b*s_aux_c
         if s_resultado >= (valor_i*valor_cmax):
             s_resultado = valor_i*valor_cmax
-        arr_resultado_s.append(round(s_resultado,3))
+        arr_resultado_s.append(round(s_resultado*valor_amplicador,3))
     return arr_resultado_s
 
 def obtener_valor_cmax(valor_r, valor_e):
