@@ -296,6 +296,13 @@ drop_sistema_categoria.grid(row=5,column=2)
 drop_sistema_sub_categoria.grid(row=5,column=3)
 drop_zona.grid(row=6,column=2)
 
+drop_tipo.config(width=5)
+drop_coef.config(width=5)
+drop_amortg.config(width=5)
+drop_sistema_categoria.config(width=10)
+drop_sistema_sub_categoria.config(width=10)
+drop_zona.config(width=5)
+
 button_periodo.grid(row=0,column=4)
 button_paso.grid(row=1,column=4)
 button_tipo.grid(row=2,column=4)
