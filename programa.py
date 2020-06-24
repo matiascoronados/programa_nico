@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 root = Tk()
 root.title("Espectro de Diseño segun Nch2369")
 #root.iconbitmap("Imagenes/icono.ico")
-root.geometry("780x500")
+root.geometry("750x510")
 
 arr_tipos_variables = ["Periodo considerado",
 "Paso del periodo",
@@ -204,9 +204,21 @@ def proceso_principal(entradas):
         messagebox.showinfo("Informacion","Archivos creados bajo los nombres: \n\tdatos_"+str(n_archivo)+".txt \n\tgrafico_"+str(n_archivo)+".png")
         n_archivo = n_archivo+1
 
+def normar_string(string_e, len_e):
+    largo_string = len(string_e)
+    if largo_string > len_e:
+        string_final = ""
+        for x in range(largo_string-len_e,largo_string):
+            string_final = string_final+string_e[x] 
+        return "..."+string_final
+    else:
+        return string_e
+
 def elegir_directorio():
     global directorio
     directorio = filedialog.askdirectory()
+    str_directorio = normar_string(str(directorio),40)
+    lb_directorio.config(text=str_directorio)
 
 def ejecutar():
     if directorio == "":
@@ -226,16 +238,13 @@ def ejecutar():
                 proceso_principal(entradas)
 
 def actualizar_valores_sistema(*args):
-    try:
-        menu = drop_sistema_sub_categoria['menu']
-        menu.delete(0,'end')
-        indice_categoria = arr_categor_sistema.index(var_sistema_categoria.get())
-        tupla_indices = matriz_indices_sistema[indice_categoria]
-        for i in range(tupla_indices[0],tupla_indices[1]+1):
-            menu.add_command(label=arr_sistema[i],command=lambda val=arr_sistema[i]:var_sistema.set(val))
-        var_sistema.set(arr_sistema[tupla_indices[0]])
-    except:
-        print("fallo")
+    drop_sistema_menu = drop_sistema_sub_categoria['menu']
+    drop_sistema_menu.delete(0,'end')
+    indice_categoria = arr_categor_sistema.index(var_sistema_categoria.get())
+    tupla_indices = matriz_indices_sistema[indice_categoria]
+    for i in range(tupla_indices[0],tupla_indices[1]+1):
+        drop_sistema_menu.add_command(label=arr_sistema[i],command=lambda val=arr_sistema[i]:var_sistema.set(val))
+    var_sistema.set(arr_sistema[tupla_indices[0]])
 
 
 var_tipo = StringVar()
@@ -254,7 +263,7 @@ lb_coef =       Label(root,text="Coef. de importancia",bg="grey",pady=3,padx=25)
 lb_amortg =     Label(root,text="Amortiguamiento",bg="grey",pady=3,padx=37)
 lb_sistema =    Label(root,text="Sistema resistente",bg="grey",pady=3,padx=32)
 lb_zona =       Label(root,text="Zona sismica",bg="grey",pady=3,padx=48)
-lb_directorio = Label(root,text="Seleccione un directorio",pady=3,padx=4)
+lb_directorio = Label(root,text="Seleccione un directorio",pady=3,padx=20)
 
 
 arr_categor_sistema_sub_categoria = [""]
@@ -287,6 +296,8 @@ lb_coef.grid(row=3,column=1,pady=20)
 lb_amortg.grid(row=4,column=1,pady=20)
 lb_sistema.grid(row=5,column=1,pady=20)
 lb_zona.grid(row=6,column=1,pady=20)
+lb_directorio.grid(row=7,column=2,pady=20)
+lb_directorio.config(width=30)
 
 entry_periodo.grid(row=0,column=2)
 entry_paso.grid(row=1,column=2)
@@ -298,12 +309,12 @@ drop_sistema_categoria.grid(row=5,column=2)
 drop_sistema_sub_categoria.grid(row=5,column=3)
 drop_zona.grid(row=6,column=2)
 
-drop_tipo.config(width=5)
-drop_coef.config(width=5)
-drop_amortg.config(width=5)
-drop_sistema_categoria.config(width=10)
-drop_sistema_sub_categoria.config(width=10)
-drop_zona.config(width=5)
+drop_tipo.config(width=10)
+drop_coef.config(width=10)
+drop_amortg.config(width=15)
+drop_sistema_categoria.config(width=15)
+drop_sistema_sub_categoria.config(width=15)
+drop_zona.config(width=10)
 
 button_periodo.grid(row=0,column=4)
 button_paso.grid(row=1,column=4)
@@ -312,7 +323,7 @@ button_coef.grid(row=3,column=4)
 button_amortg.grid(row=4,column=4)
 button_sistema.grid(row=5,column=4)
 button_zona.grid(row=6,column=4)
-button_ejecutar.grid(row=7,column=2,columnspan=2)
-button_directorio.grid(row=7,column=0,columnspan=2)
+button_ejecutar.grid(row=7,column=4)
+button_directorio.grid(row=7,column=1)
 
 root.mainloop()
