@@ -201,8 +201,8 @@ def proceso_principal(entradas):
          messagebox.showerror("Error","Fallo inesperado en crear archivo del grafico")
     else:
         global n_archivo
-        n_archivo = n_archivo + 1
         messagebox.showinfo("Informacion","Archivos creados bajo los nombres: \n\tdatos_"+str(n_archivo)+".txt \n\tgrafico_"+str(n_archivo)+".png")
+        n_archivo = n_archivo+1
 
 def elegir_directorio():
     global directorio
@@ -233,7 +233,7 @@ def actualizar_valores_sistema(*args):
         tupla_indices = matriz_indices_sistema[indice_categoria]
         for i in range(tupla_indices[0],tupla_indices[1]+1):
             menu.add_command(label=arr_sistema[i],command=lambda val=arr_sistema[i]:var_sistema.set(val))
-        var_sistema.set(arr_sistema[0])
+        var_sistema.set(arr_sistema[tupla_indices[0]])
     except:
         print("fallo")
 
@@ -247,13 +247,15 @@ var_zona = StringVar()
 
 var_sistema_categoria.trace('w',actualizar_valores_sistema)
 
-lb_periodo =    Label(root,text="Periodo considerado",bg="grey",pady=3,padx=196)
-lb_paso =       Label(root,text="Paso del periodo",bg="grey",pady=3,padx=210)
-lb_tipo =       Label(root,text="Tipo de suelo",bg="grey",pady=3,padx=219)
-lb_coef =       Label(root,text="Coef. de importancia",bg="grey",pady=3,padx=195)
-lb_amortg =     Label(root,text="Amortiguamiento",bg="grey",pady=3,padx=207)
-lb_sistema =    Label(root,text="Sistema resistente",bg="grey",pady=3,padx=202)
-lb_zona =       Label(root,text="Zona sismica",bg="grey",pady=3,padx=218)
+lb_periodo =    Label(root,text="Periodo considerado",bg="grey",pady=3,padx=26)
+lb_paso =       Label(root,text="Paso del periodo",bg="grey",pady=3,padx=40)
+lb_tipo =       Label(root,text="Tipo de suelo",bg="grey",pady=3,padx=49)
+lb_coef =       Label(root,text="Coef. de importancia",bg="grey",pady=3,padx=25)
+lb_amortg =     Label(root,text="Amortiguamiento",bg="grey",pady=3,padx=37)
+lb_sistema =    Label(root,text="Sistema resistente",bg="grey",pady=3,padx=32)
+lb_zona =       Label(root,text="Zona sismica",bg="grey",pady=3,padx=48)
+lb_directorio = Label(root,text="Seleccione un directorio",pady=3,padx=4)
+
 
 arr_categor_sistema_sub_categoria = [""]
 
